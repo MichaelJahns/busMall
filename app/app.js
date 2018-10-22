@@ -44,4 +44,10 @@ function render(){
 createElement('p', cardDeck[0].description, window1);
 createElement('p', cardDeck[1].description, window2);
 createElement('p', cardDeck[2].description, window3);
+cardDeck.splice(0, 3);
+console.table(cardDeck);
+if(cardDeck.length === 0){
+    shuffle(allProducts);
+    console.log(`the deck emptied and was reshuffled`)
+}
 };
