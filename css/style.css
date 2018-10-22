@@ -1,0 +1,8 @@
+div
+{
+    height: 150px;
+    width: 150px;
+    outline: blue dotted 2px;
+    display: inline-block;
+    margin: 100px;
+}
