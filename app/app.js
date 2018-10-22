@@ -1,11 +1,13 @@
+var counter = 0;
 var cardDeck = [];
 var allProducts = [];
 var prestidigitation = [];
 
-var window1 = document.getElementById('test1');
-var window2 = document.getElementById('test2');
-var window3 = document.getElementById('test3');
-prestidigitation.push(window1, window2, window3);
+var counterHTML = document.getElementById('counter');
+var product1 = document.getElementById('product1');
+var product2 = document.getElementById('product2');
+var product3 = document.getElementById('product3');
+prestidigitation.push(product1, product2, product3);
 
 
 function product (id, description, filepath) {
@@ -58,17 +60,36 @@ function render(){
     }
     for(var i = 0; i <= 2; i++){
     var idReference = cardDeck[i].id;
-        console.log(idReference)
         for(var j = 0; j < allProducts.length; j++){
             if(idReference === allProducts[j].id){
-                console.log(allProducts[j].id)
                 prestidigitation[i].src = allProducts[j].filepath;
+                prestidigitation[i].title = allProducts[j].description;
+                prestidigitation[i].alt = allProducts[j].description;
+                prestidigitation[i].id = allProducts[j].id;
                 allProducts[j].views++;
             }
         }  
     }
     cardDeck.splice(0, 3);
 };
+
+function preference(event){
+    if(counter < 25){
+        for(var i = 0; i < allProducts.length; i++){
+            if(event.target.id === allProducts[i].id){
+                allProducts[i].clicks++;
+                counter++;
+                counterHTML.innerHTML = counter;
+                if(counter === 25){
+                    console.table(allProducts);
+                }
+            }
+        }
+        render();
+    }
+    
+}
 //+++++++++++++++
 //Executable Code
 render();
+window.addEventListener('click', preference);
