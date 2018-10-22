@@ -9,20 +9,30 @@ function product (name) {
     allProducts.push(this); 
 }
 
-new product (' butthole');
-new product (' doody');
-new product (' farts');
-new product (' faith');
-new product (' Tower');
-new product (' dreams');
+new product (' 1');
+new product (' 2');
+new product (' 3');
+new product (' 4');
+new product (' 5');
+new product (' 6');
+console.table(allProducts);
 
-function shuffle(allProducts)
+function shuffle(array)
 {
-    for (var i = allProducts.length - 1; i > 0; i--) {
-        var j = Math.floor(Math.random() * (i + 1));
-        var temp = allProducts[i];
-        allProducts[i] = allProducts[j];
-        allProducts[j] = temp;
+    cardDeck = array.slice(0);
+    console.log(cardDeck)
+
+    for (var i = cardDeck.length - 1; i > 0; i--) {
+        //make randomPosition = random number inclusive
+        var randomPosition = Math.floor(Math.random() * (i + 1));
+        //grab object at current array idx and store
+        var temp = cardDeck[i];
+        //overrides array idx with random number object
+        cardDeck[i] = cardDeck[randomPosition];
+        //places overridden arrady idx on randomPositions old value.
+        cardDeck[randomPosition] = temp;
     }
+    console.table(allProducts)
+    console.table(cardDeck)
 }
 shuffle();
