@@ -1,3 +1,25 @@
+header
+{
+    text-align: center;
+    margin: 60px auto;
+    font-size: 24px;
+    border-bottom: gray ridge 5px;
+    width: 400px;
+}
+nav
+{
+    font-size: 16px;
+}
+nav:hover
+{
+    cursor: pointer;
+    color: gray;
+}
+ul
+{
+    margin-left: 40%;
+    display: none;
+}
 img
 {
     height: 150px;
@@ -11,4 +33,9 @@ section
     border: gray 10px ridge;
     margin: 120px auto;
     width: 800px;
+}
+canvas
+{
+    width: 960px;
+    height: 400px;
 }
