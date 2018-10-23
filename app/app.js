@@ -7,87 +7,100 @@ var counterHTML = document.getElementById('counter');
 var product1 = document.getElementById('product1');
 var product2 = document.getElementById('product2');
 var product3 = document.getElementById('product3');
+var productWindow = document.getElementById('productWindow')
 prestidigitation.push(product1, product2, product3);
 
 
-function product (id, description, filepath) {
-    this.id = id;
-    this.description = description;
-    this.filepath = filepath;
-    this.views = 0;
-    this.clicks = 0;
+function Product (id, description, filepath) {
+  this.id = id;
+  this.description = description;
+  this.filepath = filepath;
+  this.views = 0;
+  this.clicks = 0;
 
-    allProducts.push(this); 
+  allProducts.push(this);
 }
 
-new product (' 0', 'one walky boi', 'img/bike.jpg');
-new product (' 1', 'bag', 'img/bag.jpg')
-new product (' 2', 'banana slicer', 'img/banana.jpg');
-new product (' 3', 'bathroom stand', 'img/bathroom.jpg');
-new product (' 4', 'useless boots', 'img/boots.jpg');
-new product (' 5', 'breakfast machine', 'img/breakfast.jpg');
-new product (' 6', 'meat bubblegum', 'img/bubblegum.jpg');
-new product (' 7', 'bad chair', 'img/chair.jpg');
-new product (' 8', 'our lord' , 'img/cthulhu.jpg');
-new product (' 9', 'duck bill', 'img/dog-duck.jpg');
-new product (' 10', 'dragon meat', 'img/dragon.jpg');
-new product (' 11', 'pen spoon', 'img/pen.jpg');
-new product (' 12', 'pet sweeper', 'img/pet-sweep.jpg');
-new product (' 13', 'pizza scissors', 'img/scissors.jpg');
-new product (' 14', 'shark bag', 'img/shark.jpg');
-new product (' 15', 'baby sweep', 'img/sweep.png');
-new product (' 16', 'tauntaun blanket', 'img/tauntaun.jpg');
-new product (' 17', 'unicorn meat', 'img/unicorn.jpg');
-new product (' 18', 'tentacle usb', 'img/usb.gif');
-new product (' 19', 'weird water can', 'img/water-can.jpg');
-new product (' 20', 'bad wine glass', 'img/wine-glass.jpg');
+new Product (' 0', 'Walking Bike', 'img/bike.jpg');
+new Product (' 1', 'bag', 'img/bag.jpg')
+new Product (' 2', 'Easy Banana Slicer', 'img/banana.jpg');
+new Product (' 3', 'Bathroom Buddy', 'img/bathroom.jpg');
+new Product (' 4', 'Fashion First Boots', 'img/boots.jpg');
+new Product (' 5', 'Breakfast Machine', 'img/breakfast.jpg');
+new Product (' 6', 'Meat Bubblegum', 'img/bubblegum.jpg');
+new Product (' 7', 'Gregorian Torture Device', 'img/chair.jpg');
+new Product (' 8', 'Cthulu Doll' , 'img/cthulhu.jpg');
+new Product (' 9', 'Doogy Duck Bill', 'img/dog-duck.jpg');
+new Product (' 10', 'Edible Dragon Meat', 'img/dragon.jpg');
+new Product (' 11', 'Pen Utensils', 'img/pen.jpg');
+new Product (' 12', 'Pet Sweeper', 'img/pet-sweep.jpg');
+new Product (' 13', 'Pizza Scissors', 'img/scissors.jpg');
+new Product (' 14', 'Shark Sleeping Bag', 'img/shark.jpg');
+new Product (' 15', 'Baby House Sweeper', 'img/sweep.png');
+new Product (' 16', 'Tauntaun Sleeping Bag', 'img/tauntaun.jpg');
+new Product (' 17', 'Nearly Edible Unicorn Meat', 'img/unicorn.jpg');
+new Product (' 18', 'Tentacle USB', 'img/usb.gif');
+new Product (' 19', 'Self Love Watering Can', 'img/water-can.jpg');
+new Product (' 20', 'Shiek Wine Glass', 'img/wine-glass.jpg');
 
 function shuffle(array){
-    cardDeck = array.slice(0);
-    for (var i = cardDeck.length - 1; i > 0; i--) {
-        var randomPosition = Math.floor(Math.random() * (i + 1));
-        var temp = cardDeck[i];
-        cardDeck[i] = cardDeck[randomPosition];
-        cardDeck[randomPosition] = temp;
-    }
-    // console.table(cardDeck)
+  cardDeck = array.slice(0);
+  for (var i = cardDeck.length - 1; i > 0; i--) {
+    var randomPosition = Math.floor(Math.random() * (i + 1));
+    var temp = cardDeck[i];
+    cardDeck[i] = cardDeck[randomPosition];
+    cardDeck[randomPosition] = temp;
+  }
 }
 
+function createElement(type, content, parent){
+  var element = document.createElement(type);
+  element.innerHTML = content;
+  parent.appendChild(element);
+}
 function render(){
-    if(cardDeck.length < 3 ){
-        shuffle(allProducts);
-        console.log(`the deck emptied and was reshuffled`)
-    }
-    for(var i = 0; i <= 2; i++){
+  if(cardDeck.length < 3 ){
+    shuffle(allProducts);
+    console.log(`the deck emptied and was reshuffled`)
+  }
+  for(var i = 0; i <= 2; i++){
     var idReference = cardDeck[i].id;
-        for(var j = 0; j < allProducts.length; j++){
-            if(idReference === allProducts[j].id){
-                prestidigitation[i].src = allProducts[j].filepath;
-                prestidigitation[i].title = allProducts[j].description;
-                prestidigitation[i].alt = allProducts[j].description;
-                prestidigitation[i].id = allProducts[j].id;
-                allProducts[j].views++;
-            }
-        }  
+    for(var j = 0; j < allProducts.length; j++){
+      if(idReference === allProducts[j].id){
+        prestidigitation[i].src = allProducts[j].filepath;
+        prestidigitation[i].title = allProducts[j].description;
+        prestidigitation[i].alt = allProducts[j].description;
+        prestidigitation[i].id = allProducts[j].id;
+        allProducts[j].views++;
+      }
     }
-    cardDeck.splice(0, 3);
-};
+  }
+  cardDeck.splice(0, 3);
+}
 
+function results(){
+  for(var i = 0; i < allProducts.length; i++){
+    var results = document.getElementById('results');
+    createElement('li', `${allProducts[i].clicks}/${allProducts[i].views} (clicks/views) for item ${allProducts[i].description}`, results);
+  }
+}
 function preference(event){
-    if(counter < 25){
-        for(var i = 0; i < allProducts.length; i++){
-            if(event.target.id === allProducts[i].id){
-                allProducts[i].clicks++;
-                counter++;
-                counterHTML.innerHTML = counter;
-                if(counter === 25){
-                    console.table(allProducts);
-                }
-            }
+  if(counter < 25){
+    for(var i = 0; i < allProducts.length; i++){
+      if(event.target.id === allProducts[i].id){
+        allProducts[i].clicks++;
+        counter++;
+        counterHTML.innerHTML = counter;
+        if(counter === 25){
+          console.table(allProducts);
+          productWindow.style.display = 'none';
+          results();
         }
-        render();
+      }
     }
-    
+    render();
+  }
+
 }
 //+++++++++++++++
 //Executable Code
