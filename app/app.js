@@ -1,3 +1,4 @@
+
 var counter = 0;
 var cardDeck = [];
 var allProducts = [];
@@ -7,7 +8,8 @@ var counterHTML = document.getElementById('counter');
 var product1 = document.getElementById('product1');
 var product2 = document.getElementById('product2');
 var product3 = document.getElementById('product3');
-var productWindow = document.getElementById('productWindow')
+var productWindow = document.getElementById('productWindow');
+var resultsWindow = document.getElementById('results');
 prestidigitation.push(product1, product2, product3);
 
 
@@ -81,10 +83,13 @@ function render(){
 function results(){
   for(var i = 0; i < allProducts.length; i++){
     var results = document.getElementById('results');
-    createElement('li', `${allProducts[i].clicks}/${allProducts[i].views} (clicks/views) for item ${allProducts[i].description}`, results);
+    createElement('li', `${allProducts[i].clicks}/${allProducts[i].views} for item ${allProducts[i].description}`, results);
   }
 }
 function preference(event){
+  if(event.target.className !== 'vendor'){
+    alert(`Please click directly on an image.`)
+  }
   if(counter < 25){
     for(var i = 0; i < allProducts.length; i++){
       if(event.target.id === allProducts[i].id){
@@ -94,6 +99,7 @@ function preference(event){
         if(counter === 25){
           console.table(allProducts);
           productWindow.style.display = 'none';
+          resultsWindow.style.display = 'block'
           results();
         }
       }
@@ -105,4 +111,4 @@ function preference(event){
 //+++++++++++++++
 //Executable Code
 render();
-window.addEventListener('click', preference);
+productWindow.addEventListener('click', preference);
