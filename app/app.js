@@ -166,9 +166,9 @@ function chartData(){
 
 
 var data = {
-  labels: productList, // productList array we declared earlier
+  labels: productList,
   datasets: [{
-    data: productVotes, // votes array we declared earlier
+    data: productVotes,
     backgroundColor: 'rgb(143, 117, 0)',
     hoverBackgroundColor: 'purple'
   }]
@@ -183,7 +183,7 @@ function drawChart() {
     options: {
       responsive: false,
       animation: {
-        duration: 500,
+        duration: 1000,
         easing: 'easeOutBounce'
       }
     },
@@ -191,7 +191,8 @@ function drawChart() {
       xAxes: [{
         fontSize: 1,
         ticks: {
-          autoSkip: false
+          autoSkip: false,
+          fontSize: .5
         }
       }],
       yAxes: [{
@@ -203,3 +204,4 @@ function drawChart() {
     }
   });
 }
+drawChart();
