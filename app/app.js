@@ -8,6 +8,9 @@ var counterHTML = document.getElementById('counter');
 var product1 = document.getElementById('product1');
 var product2 = document.getElementById('product2');
 var product3 = document.getElementById('product3');
+
+var exitGallery = document.getElementById('closeGallery')
+var pullGallery = document.getElementById('pullGallery');
 var productWindow = document.getElementById('productWindow');
 var resultsWindow = document.getElementById('results');
 prestidigitation.push(product1, product2, product3);
@@ -24,7 +27,7 @@ function Product (id, description, filepath) {
 }
 
 new Product (' 0', 'Walking Bike', 'img/bike.jpg');
-new Product (' 1', 'bag', 'img/bag.jpg')
+new Product (' 1', 'R2D2 Bag', 'img/bag.jpg')
 new Product (' 2', 'Easy Banana Slicer', 'img/banana.jpg');
 new Product (' 3', 'Bathroom Buddy', 'img/bathroom.jpg');
 new Product (' 4', 'Fashion First Boots', 'img/boots.jpg');
@@ -57,8 +60,14 @@ function shuffle(array){
 
 function createElement(type, content, parent){
   var element = document.createElement(type);
-  element.innerHTML = content;
+  if(type === 'img'){
+    element.src   = allProducts[content].filepath;
+    element.alt   = allProducts[content].description;
+    element.title = allProducts[content].description;
+  }else{
+    element.innerHTML = content;}
   parent.appendChild(element);
+
 }
 function render(){
   if(cardDeck.length < 3 ){
@@ -86,29 +95,111 @@ function results(){
     createElement('li', `${allProducts[i].clicks}/${allProducts[i].views} for item ${allProducts[i].description}`, results);
   }
 }
+
 function preference(event){
   if(event.target.className !== 'vendor'){
-    alert(`Please click directly on an image.`)
+    document.getElementById('productWindow').style.background = 'red';
+    document.getElementById('warning').style.display = 'block';
   }
-  if(counter < 25){
-    for(var i = 0; i < allProducts.length; i++){
-      if(event.target.id === allProducts[i].id){
-        allProducts[i].clicks++;
-        counter++;
-        counterHTML.innerHTML = counter;
-        if(counter === 25){
-          console.table(allProducts);
-          productWindow.style.display = 'none';
-          resultsWindow.style.display = 'block'
-          results();
+  else{
+    document.getElementById('productWindow').style.background = 'white';
+    document.getElementById('warning').style.display = 'none';
+    if(counter < 25){
+      for(var i = 0; i < allProducts.length; i++){
+        if(event.target.id === allProducts[i].id){
+          allProducts[i].clicks++;
+          counter++;
+          counterHTML.innerHTML = counter;
+          if(counter === 25){
+            console.table(allProducts);
+            productWindow.style.display = 'none';
+            resultsWindow.style.display = 'block'
+            results();
+            chartData();
+            drawChart();
+          }
         }
       }
+      render();
     }
-    render();
   }
-
+}
+function openGallery(){
+  var dump = document.getElementById('gallery')
+  dump.style.display = 'block';
+  
+  for(var i = 0; i < allProducts.length; i++){
+    createElement('img', i, dump)
+  }
+}
+function closeGallery(){
+  document.getElementById('gallery').style.display = 'none'
 }
 //+++++++++++++++
 //Executable Code
 render();
 productWindow.addEventListener('click', preference);
+pullGallery.addEventListener('click', openGallery);
+exitGallery.addEventListener('click', closeGallery);
+
+
+
+
+
+var productList = [];
+var productVotes = [];
+
+
+function chartData(){
+  for(var i = 0; i < allProducts.length; i++){
+    productList.push(allProducts[i].description)
+    productVotes.push(allProducts[i].clicks)
+  }
+  console.table(productList)
+  console.table(productVotes)
+}
+
+
+
+
+
+
+
+var data = {
+  labels: productList, // productList array we declared earlier
+  datasets: [{
+    data: productVotes, // votes array we declared earlier
+    backgroundColor: 'rgb(143, 117, 0)',
+    hoverBackgroundColor: 'purple'
+  }]
+
+};
+
+function drawChart() {
+  var ctx = document.getElementById('preferenceData').getContext('2d');
+  preferenceData = new Chart(ctx, {
+    type: 'bar',
+    data: data,
+    options: {
+      responsive: false,
+      animation: {
+        duration: 500,
+        easing: 'easeOutBounce'
+      }
+    },
+    scales: {
+      xAxes: [{
+        fontSize: 1,
+        ticks: {
+          autoSkip: false
+        }
+      }],
+      yAxes: [{
+        ticks: {
+          beginAtZero: true,
+          stepSize: 1
+        }
+      }]
+    }
+  });
+}
