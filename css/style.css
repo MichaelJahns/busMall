@@ -17,9 +17,14 @@ nav:hover
     cursor: pointer;
     color: gray;
 }
-ul
+#results
 {
-    margin-left: 40%;
+    width: 960px;
+    margin: 0px auto;
+}
+#resultsUl
+{
+    /* margin-left: 40%; */
     display: none;
 }
 img

@@ -12,7 +12,7 @@ var product3 = document.getElementById('product3');
 var exitGallery = document.getElementById('closeGallery')
 var pullGallery = document.getElementById('pullGallery');
 var productWindow = document.getElementById('productWindow');
-var resultsWindow = document.getElementById('results');
+var resultsWindow = document.getElementById('resultsUl');
 prestidigitation.push(product1, product2, product3);
 
 
@@ -48,6 +48,8 @@ new Product (' 18', 'Tentacle USB', 'img/usb.gif');
 new Product (' 19', 'Self Love Watering Can', 'img/water-can.jpg');
 new Product (' 20', 'Shiek Wine Glass', 'img/wine-glass.jpg');
 
+// ++++++++++++++++
+// Helper Functions
 function shuffle(array){
   cardDeck = array.slice(0);
   for (var i = cardDeck.length - 1; i > 0; i--) {
@@ -65,11 +67,11 @@ function createElement(type, content, parent){
     element.alt   = allProducts[content].description;
     element.title = allProducts[content].description;
   }else{
-    element.innerHTML = content;}
+    element.innerHTML = content;
+  }
   parent.appendChild(element);
-
 }
-function render(){
+function renderOptions(){
   if(cardDeck.length < 3 ){
     shuffle(allProducts);
     console.log(`the deck emptied and was reshuffled`)
@@ -89,14 +91,58 @@ function render(){
   cardDeck.splice(0, 3);
 }
 
-function results(){
+function chartData(){
+  var productList = [];
+  var productVotes = [];
+  for(var i = 0; i < allProducts.length; i++){
+    productList.push(allProducts[i].description)
+    productVotes.push(allProducts[i].clicks)
+  }
+  return[productList, productVotes];
+}
+
+function renderChart() {
+  chartData();
+  var ctx = document.getElementById('preferenceData').getContext('2d');
+  Chart.defaults.global.defaultFontFamily = 'lato';
+  Chart.defaults.global.defaultFontSize = 12;
+  preferenceData = new Chart(ctx, {
+    type: 'horizontalBar',
+    data:{
+      labels: chartData()[0],
+      datasets:[{
+        label: 'Votes Tallied',
+        data: chartData()[1],
+        backgroundColor: 'rgb(143, 117, 0)',
+        hoverBackgroundColor: 'purple',
+        borderWidth: 1,
+        borderColor: 'gray',
+        hoverBorderWidth: 3,
+        hoverBorderColor: '#000'
+        
+      }]
+    },
+    options:{
+      title:{
+        display: true,
+        text: 'Users Preference Data',
+        fontSize: 25
+      },
+      legend:{
+        display: false,
+      }
+    }
+  });
+}
+function renderList(){
   for(var i = 0; i < allProducts.length; i++){
     var results = document.getElementById('results');
     createElement('li', `${allProducts[i].clicks}/${allProducts[i].views} for item ${allProducts[i].description}`, results);
   }
 }
-
-function preference(event){
+//++++++++++++++
+//Event Handlers
+function handlePreference(event){
   if(event.target.className !== 'vendor'){
     document.getElementById('productWindow').style.background = 'red';
     document.getElementById('warning').style.display = 'block';
@@ -110,21 +156,21 @@ function preference(event){
           allProducts[i].clicks++;
           counter++;
           counterHTML.innerHTML = counter;
-          if(counter === 25){
+          if(counter === 3){
             console.table(allProducts);
             productWindow.style.display = 'none';
             resultsWindow.style.display = 'block'
-            results();
-            chartData();
-            drawChart();
+            renderList();
+            renderChart();
+            document.getElementById('preferenceData').style.display = "block";
           }
         }
       }
-      render();
+      renderOptions();
     }
   }
 }
-function openGallery(){
+function handleGalleryOpen(event){
   var dump = document.getElementById('gallery')
   dump.style.display = 'block';
   
@@ -132,32 +178,17 @@ function openGallery(){
     createElement('img', i, dump)
   }
 }
-function closeGallery(){
+function handleGalleryClose(event){
   document.getElementById('gallery').style.display = 'none'
 }
-//+++++++++++++++
+
+//===============
 //Executable Code
-render();
-productWindow.addEventListener('click', preference);
-pullGallery.addEventListener('click', openGallery);
-exitGallery.addEventListener('click', closeGallery);
-
-
-
-
-
-var productList = [];
-var productVotes = [];
-
-
-function chartData(){
-  for(var i = 0; i < allProducts.length; i++){
-    productList.push(allProducts[i].description)
-    productVotes.push(allProducts[i].clicks)
-  }
-  console.table(productList)
-  console.table(productVotes)
-}
+//===============
+renderOptions();
+productWindow.addEventListener('click', handlePreference);
+pullGallery.addEventListener('click', handleGalleryOpen);
+exitGallery.addEventListener('click', handleGalleryClose);
 
 
 
@@ -165,41 +196,11 @@ function chartData(){
 
 
 
-var data = {
-  labels: productList, // productList array we declared earlier
-  datasets: [{
-    data: productVotes, // votes array we declared earlier
-    backgroundColor: 'rgb(143, 117, 0)',
-    hoverBackgroundColor: 'purple'
-  }]
 
-};
 
-function drawChart() {
-  var ctx = document.getElementById('preferenceData').getContext('2d');
-  preferenceData = new Chart(ctx, {
-    type: 'bar',
-    data: data,
-    options: {
-      responsive: false,
-      animation: {
-        duration: 500,
-        easing: 'easeOutBounce'
-      }
-    },
-    scales: {
-      xAxes: [{
-        fontSize: 1,
-        ticks: {
-          autoSkip: false
-        }
-      }],
-      yAxes: [{
-        ticks: {
-          beginAtZero: true,
-          stepSize: 1
-        }
-      }]
-    }
-  });
-}
+
+
+
+
+
+

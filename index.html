@@ -9,33 +9,36 @@
         <nav id=pullGallery> (all products) </nav>
     </header>
     
-    <div id=gallery>
+    <div id=gallery><!--Hidden By Default-->
         <img src="img/x.png" id=closeGallery>
     </div>
-    
-    <article id=instructionTooltip>
-        <div id=questionMark>
-            <p> ? </p>
-            <div>
-                <p>Thank you for choosing to take part in our survey, your time and opinion are important to us. Please understand that there no benefits for participating in this survey, and you will recived nothing for doing so. If at anytime you would like to stop the survey, please navigate away from this page. </p>
-                <p>We at busMall are conducting a preference survey with our frequent passengers. Over the course of this survey you will be shown three seperate images of our top of the line products. Please select the one you would be most likely to purchase. After your selection you will be shown three new images, please repeat the process 25 times so we can gather some meaningful data based on your selections. </p>
-                <p>At the conclusion of the survey you will be shown your preferences as part of busMalls commitment to transparency. No more data than what is shown to you on the page will be sent back to our servers for review.</p>
+
+    <div id=survery> 
+        <article id=instructionTooltip>
+            <div id=questionMark>
+                <p> ? </p>
+                <div>
+                    <p>Thank you for choosing to take part in our survey, your time and opinion are important to us. Please understand that there no benefits for participating in this survey, and you will recived nothing for doing so. If at anytime you would like to stop the survey, please navigate away from this page. </p>
+                    <p>We at busMall are conducting a preference survey with our frequent passengers. Over the course of this survey you will be shown three seperate images of our top of the line products. Please select the one you would be most likely to purchase. After your selection you will be shown three new images, please repeat the process 25 times so we can gather some meaningful data based on your selections. </p>
+                    <p>At the conclusion of the survey you will be shown your preferences as part of busMalls commitment to transparency. No more data than what is shown to you on the page will be sent back to our servers for review.</p>
+                </div>
             </div>
-        </div>
-    </article>
+        </article>
 
-    <section id=productWindow>
-        <img class = 'vendor' src='' title='' alt='' id=product1>
-        <img class = 'vendor' src='' title='' alt='' id=product2>
-        <img class = 'vendor' src='' title='' alt='' id=product3>
-        <p id=warning> Please click directly on an Image.</p>
-    </section>
+        <section id=productWindow>
+            <img class = 'vendor' src='' title='' alt='' id=product1>
+            <img class = 'vendor' src='' title='' alt='' id=product2>
+            <img class = 'vendor' src='' title='' alt='' id=product3>
+            <p id=warning> Please click directly on an Image.</p>
+        </section>
+    </div>
 
-    <ul id=results>
-        <li> (clicks/views) </li>
-    </ul>
-
-    <canvas id="preferenceData" width="960" height="300"></canvas>
+    <div id=results>
+        <ul id=resultsUl>
+            <li> (clicks/views) </li>
+        </ul>
+    </div>
+    <canvas id="preferenceData" width="600" height="300"></canvas>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
     <script src="app/app.js"></script>
 </body>
