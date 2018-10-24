@@ -1,4 +1,8 @@
-
+if(localStorage.getItem('cacheSurvey') !== null){
+  console.log(`Data exists`)
+} else {
+  populateInstances();
+}
 
 //++++++++++++++++
 //Global Variables
@@ -19,44 +23,43 @@ prestidigitation.push(product1, product2, product3);
 //++++++++++++++++++++++++
 //Store Object Constructor
 var allProducts = [];
-function Product (id, description, filepath, views, clicks) {
+function Product (id, description, filepath) {
   this.id = id;
   this.description = description;
   this.filepath = filepath;
-  this.views = views;
-  this.clicks = clicks;
+  this.views = 0;
+  this.clicks = 0;
 
   allProducts.push(this);
 }
 //+++++++++++++++++++++++
 //Creates Fresh Instances
 function populateInstances(){
-  new Product (' 0', 'Walking Bike', 'img/bike.jpg', 0, 0);
-  new Product (' 1', 'R2D2 Bag', 'img/bag.jpg', 0 , 0)
-  new Product (' 2', 'Easy Banana Slicer', 'img/banana.jpg', 0 , 0);
-  new Product (' 3', 'Bathroom Buddy', 'img/bathroom.jpg', 0 , 0);
-  new Product (' 4', 'Fashion First Boots', 'img/boots.jpg', 0 , 0);
-  new Product (' 5', 'Breakfast Machine', 'img/breakfast.jpg', 0 , 0);
-  new Product (' 6', 'Meat Bubblegum', 'img/bubblegum.jpg', 0 , 0);
-  new Product (' 7', 'Gregorian Torture Device', 'img/chair.jpg', 0 , 0);
-  new Product (' 8', 'Cthulu Doll' , 'img/cthulhu.jpg', 0 , 0);
-  new Product (' 9', 'Doogy Duck Bill', 'img/dog-duck.jpg', 0 , 0);
-  new Product (' 10', 'Edible Dragon Meat', 'img/dragon.jpg', 0 , 0);
-  new Product (' 11', 'Pen Utensils', 'img/pen.jpg', 0 , 0);
-  new Product (' 12', 'Pet Sweeper', 'img/pet-sweep.jpg', 0 , 0);
-  new Product (' 13', 'Pizza Scissors', 'img/scissors.jpg', 0 , 0);
-  new Product (' 14', 'Shark Sleeping Bag', 'img/shark.jpg', 0 , 0);
-  new Product (' 15', 'Baby House Sweeper', 'img/sweep.png', 0 , 0);
-  new Product (' 16', 'Tauntaun Sleeping Bag', 'img/tauntaun.jpg', 0 , 0);
-  new Product (' 17', 'Nearly Edible Unicorn Meat', 'img/unicorn.jpg', 0 , 0);
-  new Product (' 18', 'Tentacle USB', 'img/usb.gif', 0 , 0);
-  new Product (' 19', 'Self Love Watering Can', 'img/water-can.jpg', 0 , 0);
-  new Product (' 20', 'Shiek Wine Glass', 'img/wine-glass.jpg', 0 , 0);
+  new Product (' 0', 'Walking Bike', 'img/bike.jpg');
+  new Product (' 1', 'R2D2 Bag', 'img/bag.jpg')
+  new Product (' 2', 'Easy Banana Slicer', 'img/banana.jpg');
+  new Product (' 3', 'Bathroom Buddy', 'img/bathroom.jpg');
+  new Product (' 4', 'Fashion First Boots', 'img/boots.jpg');
+  new Product (' 5', 'Breakfast Machine', 'img/breakfast.jpg');
+  new Product (' 6', 'Meat Bubblegum', 'img/bubblegum.jpg');
+  new Product (' 7', 'Gregorian Torture Device', 'img/chair.jpg');
+  new Product (' 8', 'Cthulu Doll' , 'img/cthulhu.jpg');
+  new Product (' 9', 'Doogy Duck Bill', 'img/dog-duck.jpg');
+  new Product (' 10', 'Edible Dragon Meat', 'img/dragon.jpg');
+  new Product (' 11', 'Pen Utensils', 'img/pen.jpg');
+  new Product (' 12', 'Pet Sweeper', 'img/pet-sweep.jpg');
+  new Product (' 13', 'Pizza Scissors', 'img/scissors.jpg');
+  new Product (' 14', 'Shark Sleeping Bag', 'img/shark.jpg');
+  new Product (' 15', 'Baby House Sweeper', 'img/sweep.png');
+  new Product (' 16', 'Tauntaun Sleeping Bag', 'img/tauntaun.jpg');
+  new Product (' 17', 'Nearly Edible Unicorn Meat', 'img/unicorn.jpg');
+  new Product (' 18', 'Tentacle USB', 'img/usb.gif');
+  new Product (' 19', 'Self Love Watering Can', 'img/water-can.jpg');
+  new Product (' 20', 'Shiek Wine Glass', 'img/wine-glass.jpg');
 }
 // ++++++++++++++++
 // Helper Functions
 function shuffle(array){
-  console.table (` SHUFFLE WAS CALLED`)
   var cardDeck = [];
   cardDeck = array.slice(0);
   for (var i = cardDeck.length - 1; i > 0; i--) {
@@ -193,15 +196,6 @@ function handleGalleryClose(event){
 //===============
 //Executable Code
 //===============
-if(localStorage.getItem('cacheSurvey') !== null){
-  console.log(`Data exists`)
-  var temp = JSON.parse(localStorage.cacheSurvey)
-  for(var i = 0; i < temp.length; i++){
-    new Product(temp[i].id, temp[i].description, temp[i].filepath, temp[i].views, temp[i].clicks)
-  }
-} else {
-  populateInstances();
-}
 renderSelection();
 
 productWindow.addEventListener('click', handlePreference);
