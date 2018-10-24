@@ -1,7 +1,7 @@
 header
 {
     text-align: center;
-    margin: 60px auto 0px auto;
+    margin: 0px auto 0px auto;
     padding: 20px;
     font-size: 24px;
     border-bottom: gray ridge 5px;
@@ -35,28 +35,10 @@ img
     margin: 50px;
     border: 5px gray ridge;
 }
-section
-{
-    border: gray 10px ridge;
-    margin: -180px auto 0 auto;
-    width: 800px;
-}
-section > p
-{
-    text-align: center;
-    margin-bottom: 20px;
-    font-size: 24px;
-    display: none;
-}
-canvas
-{
-    width: 960px;
-    height: 400px;
-}
 /* Instruction Tooltip */
 #instructionTooltip
 {
-    margin: -175px auto 0 auto;
+    margin: -150px auto 0 auto;
 
     height: 400px;
     width: 400px;
@@ -93,6 +75,25 @@ canvas
     font-size: 16px;
     background-color:lightgray;
     padding: 15px;
+}
+/* Product Window */
+#productWindow
+{
+    border: gray 10px ridge;
+    margin: -150px auto 0 auto;
+    width: 800px;
+}
+section > p
+{
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+    display: none;
+}
+canvas
+{
+    width: 960px;
+    height: 400px;
 }
 /* Gallery Window */
 #gallery

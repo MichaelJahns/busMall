@@ -2,6 +2,10 @@
 
 //++++++++++++++++
 //Global Variables
+var allProducts = [];
+var cardDeck =[];
+var uniqueDraws=[];
+
 var counter = 0;
 var prestidigitation = [];
 
@@ -18,7 +22,6 @@ prestidigitation.push(product1, product2, product3);
 
 //++++++++++++++++++++++++
 //Store Object Constructor
-var allProducts = [];
 function Product (id, description, filepath, views, clicks) {
   this.id = id;
   this.description = description;
@@ -55,9 +58,8 @@ function populateInstances(){
 }
 // ++++++++++++++++
 // Helper Functions
+
 function shuffle(array){
-  console.table (` SHUFFLE WAS CALLED`)
-  var cardDeck = [];
   cardDeck = array.slice(0);
   for (var i = cardDeck.length - 1; i > 0; i--) {
     var randomPosition = Math.floor(Math.random() * (i + 1));
@@ -65,7 +67,13 @@ function shuffle(array){
     cardDeck[i] = cardDeck[randomPosition];
     cardDeck[randomPosition] = temp;
   }
-  return cardDeck;
+  for (var j =0; j < uniqueDraws.length; j++){
+    if(cardDeck[j] === uniqueDraws[0] || cardDeck[j] === uniqueDraws[1] || cardDeck[j] === uniqueDraws[2]){
+      console.log(`Duplication prevented`);
+      shuffle(allProducts);
+    }
+  }
+  uniqueDraws = cardDeck.slice(-3);
 }
 
 function createElement(type, content, parent){
@@ -82,12 +90,12 @@ function createElement(type, content, parent){
 //++++++++++++++++++++
 // Feature Functions
 function renderSelection(){
-  if(shuffle(allProducts).length < 3 ){
+  if(cardDeck.length < 3 ){
     shuffle(allProducts);
-    console.log(`the deck emptied and was reshuffled`)
+    console.log(`The Card Deck was Reshuffled`)
   }
   for(var i = 0; i <= 2; i++){
-    var idReference = shuffle(allProducts)[i].id;
+    var idReference = cardDeck[i].id;
     for(var j = 0; j < allProducts.length; j++){
       if(idReference === allProducts[j].id){
         prestidigitation[i].src = allProducts[j].filepath;
@@ -98,7 +106,7 @@ function renderSelection(){
       }
     }
   }
-  shuffle(allProducts).splice(0, 3);
+  cardDeck.splice(0, 3);
 }
 
 function chartData(){
@@ -150,6 +158,19 @@ function renderList(){
     createElement('li', `${allProducts[i].clicks}/${allProducts[i].views} for item ${allProducts[i].description}`, results);
   }
 }
+function pageLoad(){
+  console.log(`Page Loaded`)
+  if(localStorage.getItem('cacheSurvey') !== null){
+    console.log(`Data exists`)
+    var temp = JSON.parse(localStorage.cacheSurvey)
+    for(var i = 0; i < temp.length; i++){
+      new Product(temp[i].id, temp[i].description, temp[i].filepath, temp[i].views, temp[i].clicks)
+    }
+  } else {
+    populateInstances();
+  }
+  renderSelection();
+}
 //++++++++++++++
 //Event Handlers
 function handlePreference(event){
@@ -167,7 +188,8 @@ function handlePreference(event){
           counter++;
           counterHTML.innerHTML = counter;
           if(counter === 25){
-            productWindow.style.display = 'none';
+            document.getElementById('productWindow').style.display = 'none';
+            document.getElementById('instructionTooltip').style.display = 'none';
             renderList();
             renderChart();
             localStorage.cacheSurvey = JSON.stringify(allProducts);
@@ -193,17 +215,11 @@ function handleGalleryClose(event){
 //===============
 //Executable Code
 //===============
-if(localStorage.getItem('cacheSurvey') !== null){
-  console.log(`Data exists`)
-  var temp = JSON.parse(localStorage.cacheSurvey)
-  for(var i = 0; i < temp.length; i++){
-    new Product(temp[i].id, temp[i].description, temp[i].filepath, temp[i].views, temp[i].clicks)
-  }
-} else {
-  populateInstances();
-}
-renderSelection();
+pageLoad();
+
+
 
 productWindow.addEventListener('click', handlePreference);
 pullGallery.addEventListener('click', handleGalleryOpen);
 exitGallery.addEventListener('click', handleGalleryClose);
+
