@@ -184,7 +184,7 @@ function drawChart() {
       responsive: false,
       animation: {
         duration: 500,
-        easing: 'easeOut'
+        easing: 'easeOutBounce'
       }
     },
     scales: {
@@ -193,7 +193,6 @@ function drawChart() {
         ticks: {
           autoSkip: false
         }
-
       }],
       yAxes: [{
         ticks: {
@@ -201,7 +200,6 @@ function drawChart() {
           stepSize: 1
         }
       }]
-
     }
   });
 }
