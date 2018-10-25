@@ -2,22 +2,19 @@
 
 //++++++++++++++++
 //Global Variables
+var counter = 0;
 var allProducts = [];
 var cardDeck =[];
 var uniqueDraws=[];
-
-var counter = 0;
 var prestidigitation = [];
 
 var counterHTML = document.getElementById('counter');
-var product1 = document.getElementById('product1');
-var product2 = document.getElementById('product2');
-var product3 = document.getElementById('product3');
+
 
 var exitGallery = document.getElementById('closeGallery')
 var pullGallery = document.getElementById('pullGallery');
 var productWindow = document.getElementById('productWindow');
-prestidigitation.push(product1, product2, product3);
+
 
 
 //++++++++++++++++++++++++
@@ -58,7 +55,6 @@ function populateInstances(){
 }
 // ++++++++++++++++
 // Helper Functions
-
 function shuffle(array){
   cardDeck = array.slice(0);
   for (var i = cardDeck.length - 1; i > 0; i--) {
@@ -75,7 +71,6 @@ function shuffle(array){
   }
   uniqueDraws = cardDeck.slice(-3);
 }
-
 function createElement(type, content, parent){
   var element = document.createElement(type);
   if(type === 'img'){
@@ -90,6 +85,10 @@ function createElement(type, content, parent){
 //++++++++++++++++++++
 // Feature Functions
 function renderSelection(){
+  var product1 = document.getElementById('product1');
+  var product2 = document.getElementById('product2');
+  var product3 = document.getElementById('product3');
+  prestidigitation.push(product1, product2, product3);
   if(cardDeck.length < 3 ){
     shuffle(allProducts);
     console.log(`The Card Deck was Reshuffled`)
@@ -108,7 +107,6 @@ function renderSelection(){
   }
   cardDeck.splice(0, 3);
 }
-
 function chartData(){
   var List = [];
   var Votes = [];
@@ -118,7 +116,6 @@ function chartData(){
   }
   return[List, Votes];
 }
-
 function renderChart() {
   document.getElementById('preferenceData').style.display = 'block';
   var ctx = document.getElementById('preferenceData').getContext('2d');
@@ -216,9 +213,6 @@ function handleGalleryClose(event){
 //Executable Code
 //===============
 pageLoad();
-
-
-
 productWindow.addEventListener('click', handlePreference);
 pullGallery.addEventListener('click', handleGalleryOpen);
 exitGallery.addEventListener('click', handleGalleryClose);
